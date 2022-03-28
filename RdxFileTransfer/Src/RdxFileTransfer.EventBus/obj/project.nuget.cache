@@ -1,0 +1,12 @@
+{
+  "version": 2,
+  "dgSpecHash": "3l2pEPzbZWc8EoZteq8Z8ThG3xGioEWsWwI0l1T0LaoWSQv+LYBC9q5YXlBuQGR9cNLlekSpIEEJkLeGmH8vhA==",
+  "success": true,
+  "projectFilePath": "D:\\Dev\\Seeds\\file_transfer\\RdxFileTransfer\\Src\\RdxFileTransfer.EventBus\\RdxFileTransfer.EventBus.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\HuyenPK\\.nuget\\packages\\rabbitmq.client\\6.2.4\\rabbitmq.client.6.2.4.nupkg.sha512",
+    "C:\\Users\\HuyenPK\\.nuget\\packages\\system.memory\\4.5.4\\system.memory.4.5.4.nupkg.sha512",
+    "C:\\Users\\HuyenPK\\.nuget\\packages\\system.threading.channels\\4.7.1\\system.threading.channels.4.7.1.nupkg.sha512"
+  ],
+  "logs": []
+}

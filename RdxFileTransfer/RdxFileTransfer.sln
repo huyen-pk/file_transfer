@@ -1,0 +1,60 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.32112.339
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{435247BA-92EA-429B-A0DE-27F104521307}"
+	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
+		.env = .env
+		docker-compose.yml = docker-compose.yml
+	EndProjectSection
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Src", "Src", "{592BC94E-FEBA-4991-A04A-C68087140619}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Test", "Test", "{1F913256-79D1-46AD-B108-DF055E03FB9B}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RdxFileTransfer", "Src\RdxFileTransfer\RdxFileTransfer.csproj", "{A363D1F2-B210-4C7A-ACDA-3C55A69FB37C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RdxFileTransfer.Scheduler", "Src\RdxFileTransfer.Scheduler\RdxFileTransfer.Scheduler.csproj", "{C00777D9-9459-40D5-B1B4-BAA3E6A1690F}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RdxFileTransfer.Test", "Test\RdxFileTransfer.Test\RdxFileTransfer.Test.csproj", "{AA2B0C47-BD45-4818-B84D-18B4A0128FE3}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "RdxFileTransfer.EventBus", "Src\RdxFileTransfer.EventBus\RdxFileTransfer.EventBus.csproj", "{9CD49C98-C23F-4AFF-B370-AC425C75EEBD}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{A363D1F2-B210-4C7A-ACDA-3C55A69FB37C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A363D1F2-B210-4C7A-ACDA-3C55A69FB37C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A363D1F2-B210-4C7A-ACDA-3C55A69FB37C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A363D1F2-B210-4C7A-ACDA-3C55A69FB37C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C00777D9-9459-40D5-B1B4-BAA3E6A1690F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C00777D9-9459-40D5-B1B4-BAA3E6A1690F}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C00777D9-9459-40D5-B1B4-BAA3E6A1690F}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C00777D9-9459-40D5-B1B4-BAA3E6A1690F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{AA2B0C47-BD45-4818-B84D-18B4A0128FE3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{AA2B0C47-BD45-4818-B84D-18B4A0128FE3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{AA2B0C47-BD45-4818-B84D-18B4A0128FE3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{AA2B0C47-BD45-4818-B84D-18B4A0128FE3}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9CD49C98-C23F-4AFF-B370-AC425C75EEBD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9CD49C98-C23F-4AFF-B370-AC425C75EEBD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9CD49C98-C23F-4AFF-B370-AC425C75EEBD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9CD49C98-C23F-4AFF-B370-AC425C75EEBD}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{A363D1F2-B210-4C7A-ACDA-3C55A69FB37C} = {592BC94E-FEBA-4991-A04A-C68087140619}
+		{C00777D9-9459-40D5-B1B4-BAA3E6A1690F} = {592BC94E-FEBA-4991-A04A-C68087140619}
+		{AA2B0C47-BD45-4818-B84D-18B4A0128FE3} = {1F913256-79D1-46AD-B108-DF055E03FB9B}
+		{9CD49C98-C23F-4AFF-B370-AC425C75EEBD} = {592BC94E-FEBA-4991-A04A-C68087140619}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {654A1044-B9D6-413D-BDA5-93706945D627}
+	EndGlobalSection
+EndGlobal

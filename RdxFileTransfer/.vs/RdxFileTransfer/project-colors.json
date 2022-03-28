@@ -1,0 +1,76 @@
+{
+  "Version": 1,
+  "ProjectMap": {
+    "1afee902-d546-4926-9138-a946156f2dd0": {
+      "ProjectGuid": "1afee902-d546-4926-9138-a946156f2dd0",
+      "DisplayName": "RdxFileTransfer",
+      "ColorIndex": 0
+    },
+    "4bc7221a-1b6c-44a6-bcb2-c76283cc35ff": {
+      "ProjectGuid": "4bc7221a-1b6c-44a6-bcb2-c76283cc35ff",
+      "DisplayName": "RdxFileTransfer.Test",
+      "ColorIndex": 1
+    },
+    "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3": {
+      "ProjectGuid": "a2fe74e1-b743-11d0-ae1a-00a0c90fffc3",
+      "DisplayName": "Miscellaneous Files",
+      "ColorIndex": -1
+    },
+    "b2d438fa-7441-4ab7-8262-5dacfcd081d3": {
+      "ProjectGuid": "b2d438fa-7441-4ab7-8262-5dacfcd081d3",
+      "DisplayName": "RdxFileTransfer.Orchestrator",
+      "ColorIndex": 2
+    },
+    "b6a31595-50e4-4208-88b9-b6e02c6344b6": {
+      "ProjectGuid": "b6a31595-50e4-4208-88b9-b6e02c6344b6",
+      "DisplayName": "RdxFileTransfer.Configurator",
+      "ColorIndex": 3
+    },
+    "435247ba-92ea-429b-a0de-27f104521307": {
+      "ProjectGuid": "435247ba-92ea-429b-a0de-27f104521307",
+      "DisplayName": "Solution Items",
+      "ColorIndex": 4
+    },
+    "e48dee56-8192-405e-be01-30f25e4354eb": {
+      "ProjectGuid": "e48dee56-8192-405e-be01-30f25e4354eb",
+      "DisplayName": "RdxFileTransfer.Scanner",
+      "ColorIndex": 5
+    },
+    "c9fd35e6-ed77-4a2d-bd78-b28fd489eb4c": {
+      "ProjectGuid": "c9fd35e6-ed77-4a2d-bd78-b28fd489eb4c",
+      "DisplayName": "RdxFileTransfer.Transporter",
+      "ColorIndex": 6
+    },
+    "1f913256-79d1-46ad-b108-df055e03fb9b": {
+      "ProjectGuid": "1f913256-79d1-46ad-b108-df055e03fb9b",
+      "DisplayName": "Test",
+      "ColorIndex": 7
+    },
+    "a363d1f2-b210-4c7a-acda-3c55a69fb37c": {
+      "ProjectGuid": "a363d1f2-b210-4c7a-acda-3c55a69fb37c",
+      "DisplayName": "RdxFileTransfer",
+      "ColorIndex": 8
+    },
+    "3e51f409-e954-4fa0-a61c-5b398863252b": {
+      "ProjectGuid": "3e51f409-e954-4fa0-a61c-5b398863252b",
+      "DisplayName": "RdxFileTransfer.Transporter",
+      "ColorIndex": 9
+    },
+    "d902cfb7-5ec4-4bcd-8b9e-61b2baf82884": {
+      "ProjectGuid": "d902cfb7-5ec4-4bcd-8b9e-61b2baf82884",
+      "DisplayName": "RdxFileTransfer.Scanner",
+      "ColorIndex": 10
+    },
+    "376defaa-fcb4-408f-902c-583c29e4bdc7": {
+      "ProjectGuid": "376defaa-fcb4-408f-902c-583c29e4bdc7",
+      "DisplayName": "RdxFileTransfer.Configurator",
+      "ColorIndex": 11
+    },
+    "c23377b6-8f00-433c-a701-3bc1c23503ba": {
+      "ProjectGuid": "c23377b6-8f00-433c-a701-3bc1c23503ba",
+      "DisplayName": "RdxFileTransfer.Orchestrator",
+      "ColorIndex": 12
+    }
+  },
+  "NextColorIndex": 13
+}

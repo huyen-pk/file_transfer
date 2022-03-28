@@ -1,0 +1,12 @@
+D:\Dev\Seeds\file_transfer\RdxFileTransfer\Src\RdxFileTransfer.EventBus\obj\Debug\net6.0\RdxFileTransfer.EventBus.csproj.AssemblyReference.cache
+D:\Dev\Seeds\file_transfer\RdxFileTransfer\Src\RdxFileTransfer.EventBus\obj\Debug\net6.0\RdxFileTransfer.EventBus.GeneratedMSBuildEditorConfig.editorconfig
+D:\Dev\Seeds\file_transfer\RdxFileTransfer\Src\RdxFileTransfer.EventBus\obj\Debug\net6.0\RdxFileTransfer.EventBus.AssemblyInfoInputs.cache
+D:\Dev\Seeds\file_transfer\RdxFileTransfer\Src\RdxFileTransfer.EventBus\obj\Debug\net6.0\RdxFileTransfer.EventBus.AssemblyInfo.cs
+D:\Dev\Seeds\file_transfer\RdxFileTransfer\Src\RdxFileTransfer.EventBus\obj\Debug\net6.0\RdxFileTransfer.EventBus.csproj.CoreCompileInputs.cache
+D:\Dev\Seeds\file_transfer\RdxFileTransfer\Src\RdxFileTransfer.EventBus\bin\Debug\net6.0\RdxFileTransfer.EventBus.deps.json
+D:\Dev\Seeds\file_transfer\RdxFileTransfer\Src\RdxFileTransfer.EventBus\bin\Debug\net6.0\RdxFileTransfer.EventBus.dll
+D:\Dev\Seeds\file_transfer\RdxFileTransfer\Src\RdxFileTransfer.EventBus\bin\Debug\net6.0\ref\RdxFileTransfer.EventBus.dll
+D:\Dev\Seeds\file_transfer\RdxFileTransfer\Src\RdxFileTransfer.EventBus\bin\Debug\net6.0\RdxFileTransfer.EventBus.pdb
+D:\Dev\Seeds\file_transfer\RdxFileTransfer\Src\RdxFileTransfer.EventBus\obj\Debug\net6.0\RdxFileTransfer.EventBus.dll
+D:\Dev\Seeds\file_transfer\RdxFileTransfer\Src\RdxFileTransfer.EventBus\obj\Debug\net6.0\ref\RdxFileTransfer.EventBus.dll
+D:\Dev\Seeds\file_transfer\RdxFileTransfer\Src\RdxFileTransfer.EventBus\obj\Debug\net6.0\RdxFileTransfer.EventBus.pdb
