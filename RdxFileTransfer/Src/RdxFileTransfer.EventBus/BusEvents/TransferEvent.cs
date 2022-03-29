@@ -1,4 +1,6 @@
-﻿namespace RdxFileTransfer.EventBus.Events
+﻿using RdxFileTransfer.EventBus.Enums;
+
+namespace RdxFileTransfer.EventBus.BusEvents
 {
     public class TransferEvent: RabbitMqEvent, IEvent<TransferEvent>
     {
@@ -6,7 +8,6 @@
             : base(routingKey, createdAt)
         {
         }
-
         public string SourcePath { get; set; }
         public string DestinationPath { get; set; }
         public string Message { get; set; }

@@ -1,4 +1,4 @@
-﻿namespace RdxFileTransfer.EventBus.Events
+﻿namespace RdxFileTransfer.EventBus.Enums
 {
     public enum TransferStatus
     {

@@ -1,4 +1,6 @@
-﻿namespace RdxFileTransfer.EventBus.Events
+﻿using RdxFileTransfer.EventBus.Enums;
+
+namespace RdxFileTransfer.EventBus.BusEvents
 {
     public class ErrorTransferEvent : RabbitMqEvent, IEvent<ErrorTransferEvent>
     {

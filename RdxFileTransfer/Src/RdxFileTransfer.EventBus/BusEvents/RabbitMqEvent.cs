@@ -1,4 +1,4 @@
-﻿namespace RdxFileTransfer.EventBus.Events
+﻿namespace RdxFileTransfer.EventBus.BusEvents
 {
     public class RabbitMqEvent : IEvent<RabbitMqEvent>
     {
@@ -11,6 +11,13 @@
 
             RoutingKey = routingKey;
             CreatedAt = createdAt;
+        }
+
+        public RabbitMqEvent(string routingKey)
+        {
+            ArgumentNullException.ThrowIfNull(routingKey);
+
+            RoutingKey = routingKey;
         }
     }
 }

@@ -5,7 +5,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using RdxFileTransfer.Configs;
 using RdxFileTransfer.EventBus;
-using RdxFileTransfer.EventBus.Events;
+using RdxFileTransfer.EventBus.BusEvents;
 using RdxFileTransfer.EventBus.RabbitMq;
 
 CommandLineOptions _commandArgs = null;
@@ -41,7 +41,7 @@ static async Task Run(IServiceProvider provider, string[] args)
     {
         default:
             var rabbitMqConfig = serviceScope.ServiceProvider.GetRequiredService<IOptions<RabbitMqConfig>>();
-            eventBus = new RabbitMqEventBus(rabbitMqConfig.Value);
+            eventBus = new RabbitMqEventBus(rabbitMqConfig);
             break;
     }
 
@@ -66,7 +66,7 @@ static async Task Run(IServiceProvider provider, string[] args)
 
 static void CommandFileTransfer(IEventBus eventBus, string sourceFolder, string destinationFolder)
 {
-    eventBus.Publish<TransferEvent>(new TransferEvent(routingKey: "folders", createdAt: DateTime.Now)
+    eventBus.Publish<TransferEvent>(new TransferEvent(routingKey: "transfer_jobs", createdAt: DateTime.Now)
     {
         SourcePath = sourceFolder,
         DestinationPath = destinationFolder,

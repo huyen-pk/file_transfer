@@ -1,4 +1,4 @@
-﻿namespace RdxFileTransfer.EventBus.Events
+﻿namespace RdxFileTransfer.EventBus.BusEvents
 {
     public interface IEvent<T>
     {

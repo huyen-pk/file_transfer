@@ -6,6 +6,8 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using RdxFileTransfer.EventBus;
 using RdxFileTransfer.EventBus.RabbitMq;
+using RdxFileTransfer.Scheduler;
+using RdxFileTransfer.Scheduler.Workers;
 
 using IHost host = Host.CreateDefaultBuilder(args)
         .ConfigureLogging((_, logging) =>
@@ -17,12 +19,23 @@ using IHost host = Host.CreateDefaultBuilder(args)
         .ConfigureServices((context, services) =>
             services
             .AddSingleton<IEventBus, RabbitMqEventBus>()
+            .AddScoped<TransferWorker>()
+            .AddScoped<ScanWorker>()
+            .AddScoped<Orchestrator>()
             .AddHangfire(x => x.UseMemoryStorage())
             .Configure<RabbitMqConfig>(context.Configuration.GetSection(nameof(RabbitMqConfig))))
         .Build();
 
+Start(host.Services);
 
-while(true)
+void Start(IServiceProvider provider)
+{
+    using IServiceScope serviceScope = provider.CreateScope();
+    var orchestrator = serviceScope.ServiceProvider.GetRequiredService<Orchestrator>();
+    orchestrator.Start();
+}
+
+while (true)
 {
 
 }
