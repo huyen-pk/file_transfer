@@ -2,7 +2,7 @@
 
 namespace RdxFileTransfer.EventBus.BusEvents
 {
-    public class TransferEvent: RabbitMqEvent, IEvent<TransferEvent>
+    public class TransferEvent: BaseBusEvent, IEvent<TransferEvent>
     {
         public TransferEvent(string routingKey, DateTime createdAt) 
             : base(routingKey, createdAt)

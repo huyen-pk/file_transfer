@@ -3,7 +3,7 @@ using RdxFileTransfer.EventBus.Enums;
 
 namespace RdxFileTransfer.Scheduler.Workers
 {
-    public interface IWorker
+    public interface IWorker : IDisposable
     {
         event EventHandler<JobFinishedEventArg> JobFinished;
     }

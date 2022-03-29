@@ -2,7 +2,7 @@
   "profiles": {
     "RdxFileTransfer": {
       "commandName": "Project",
-      "commandLineArgs": "-s sourcetest -d destinationTest -b rabbit",
+      "commandLineArgs": "-b rabbit",
       "environmentVariables": {
         "RabbitMqConfig__ExchangeKey": "transfer_commands",
         "RabbitMqConfig__ServerUri": "amqp://guest:guest@localhost:5672"

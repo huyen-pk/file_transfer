@@ -2,13 +2,11 @@
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
-using Microsoft.Extensions.Options;
-using RdxFileTransfer.Configs;
+using RdxFileTransfer;
 using RdxFileTransfer.EventBus;
 using RdxFileTransfer.EventBus.BusEvents;
+using RdxFileTransfer.EventBus.Constants;
 using RdxFileTransfer.EventBus.RabbitMq;
-
-CommandLineOptions _commandArgs = null;
 
 using IHost host = Host.CreateDefaultBuilder(args)
         .ConfigureLogging((_, logging) =>
@@ -18,59 +16,65 @@ using IHost host = Host.CreateDefaultBuilder(args)
             logging.AddEventLog();
         })
         .ConfigureServices((context, services) =>
-            services
-            .AddSingleton<IEventBus, RabbitMqEventBus>()
-            .Configure<RabbitMqConfig>(context.Configuration.GetSection(nameof(RabbitMqConfig))))
+           {
+               StartupOptions startupOptions = null;
+
+               Parser.Default.ParseArguments<StartupOptions>(args)
+                   .WithParsed((cmdArgs) => startupOptions = cmdArgs);
+               if (startupOptions != null)
+                   startupOptions = new StartupOptions()
+                   {
+                       EventBus = Environment.GetEnvironmentVariable(Env.EventBus) ?? Env.EventBus_Default
+                   };
+               switch (startupOptions?.EventBus)
+               {
+                   case Env.EventBus_RabbitMq:
+                   default:
+                       services
+                          .AddSingleton<IEventBus, RabbitMqEventBus>()
+                          .Configure<RabbitMqConfig>(context.Configuration.GetSection(nameof(RabbitMqConfig)));
+                       break;
+               }
+           })
         .Build();
 
+Run(host.Services, args);
 
-
-await Run(host.Services, args);
-
-static async Task Run(IServiceProvider provider, string[] args)
+static void Run(IServiceProvider provider, string[] args)
 {
-    CommandLineOptions options = null;
-
-    Parser.Default.ParseArguments<CommandLineOptions>(args)
-        .WithParsed((cmdArgs) => options = cmdArgs);
-
-    using IServiceScope serviceScope = provider.CreateScope();
-    IEventBus eventBus = null;
-
-    switch(options.EventBus)
+    Console.WriteLine("=====\nTo quit, use Ctrl + Z.\nTo transfer another folder, use command: -s [sourceFolder] -d [destinationFolder]\n====");
+    using var serviceScope = provider.CreateScope();
+    var eventBus = serviceScope.ServiceProvider.GetRequiredService<IEventBus>();
+    while (true)
     {
-        default:
-            var rabbitMqConfig = serviceScope.ServiceProvider.GetRequiredService<IOptions<RabbitMqConfig>>();
-            eventBus = new RabbitMqEventBus(rabbitMqConfig);
-            break;
-    }
-
-    string? input;
-    do
-    {
-        CommandFileTransfer(eventBus, options.SourceFolder, options.DestinationFolder);
-        Console.WriteLine($"{options.SourceFolder} folder succesfully queued to transfer.\n");
-        Console.WriteLine("=====\nTo quit, use Ctrl + Z.\nTo transfer another folder, use command: -s [sourceFolder] -d [destinationFolder]\n====");
-
-        input = Console.ReadLine();
+        var input = Console.ReadLine();
         if (input == null)
             break;
 
+        CommandLineOptions options = null;
         var arguments = input.Split(' ');
         Parser.Default.ParseArguments<CommandLineOptions>(arguments)
                 .WithParsed((cmdArgs) => options = cmdArgs);
+        if (options == null)
+            continue;
+
+        CommandFileTransfer(eventBus,
+                            options.SourceFolder,
+                            options.DestinationFolder);
+
+        Console.WriteLine("=====\nTo quit, use Ctrl + Z.\nTo transfer another folder, use command: -s [sourceFolder] -d [destinationFolder]\n====");
     }
-    while (true);
-    
+
 }
 
 static void CommandFileTransfer(IEventBus eventBus, string sourceFolder, string destinationFolder)
 {
-    eventBus.Publish<TransferEvent>(new TransferEvent(routingKey: "transfer_jobs", createdAt: DateTime.Now)
+    eventBus.Publish<TransferEvent>(new TransferEvent(routingKey: Queues.FOLDER_QUEUE, createdAt: DateTime.Now)
     {
         SourcePath = sourceFolder,
         DestinationPath = destinationFolder,
     });
+    Console.WriteLine($"{sourceFolder} folder succesfully queued to transfer.\n\n");
 }
 
 
