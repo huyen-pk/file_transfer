@@ -1,0 +1,9 @@
+services:
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    ports:
+        - 1978:5672
+        - 11978:15672
+    volumes:
+        - ~/.docker-conf/rabbitmq/data/:/var/lib/rabbitmq/
+        - ~/.docker-conf/rabbitmq/log/:/var/log/rabbitmq
