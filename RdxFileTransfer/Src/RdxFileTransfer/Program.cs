@@ -35,6 +35,7 @@ using IHost host = Host.CreateDefaultBuilder(args)
                           .Configure<RabbitMqConfig>(context.Configuration.GetSection(nameof(RabbitMqConfig)));
                        break;
                }
+               services.AddSingleton<Runner>();
            })
         .Build();
 
@@ -44,37 +45,48 @@ static void Run(IServiceProvider provider, string[] args)
 {
     Console.WriteLine("=====\nTo quit, use Ctrl + Z.\nTo transfer another folder, use command: -s [sourceFolder] -d [destinationFolder]\n====");
     using var serviceScope = provider.CreateScope();
-    var eventBus = serviceScope.ServiceProvider.GetRequiredService<IEventBus>();
+    var runner = serviceScope.ServiceProvider.GetRequiredService<Runner>();
+    CommandLineOptions options = null;
+    Parser.Default.ParseArguments<CommandLineOptions>(args)
+                .WithParsed((cmdArgs) => options = cmdArgs);
+    if (options != null)
+    {
+        try
+        {
+            runner.CommandFileTransfer(options.SourceFolder, options.DestinationFolder);
+        }
+        catch (DirectoryNotFoundException)
+        {
+            Console.BackgroundColor = ConsoleColor.Red;
+            Console.WriteLine("Folder must exist to be transferred.");
+            Console.BackgroundColor = ConsoleColor.Red;
+        }
+    }
+
     while (true)
     {
         var input = Console.ReadLine();
         if (input == null)
             break;
 
-        CommandLineOptions options = null;
         var arguments = input.Split(' ');
         Parser.Default.ParseArguments<CommandLineOptions>(arguments)
                 .WithParsed((cmdArgs) => options = cmdArgs);
         if (options == null)
             continue;
 
-        CommandFileTransfer(eventBus,
-                            options.SourceFolder,
-                            options.DestinationFolder);
-
+        try
+        {
+            runner.CommandFileTransfer(options.SourceFolder, options.DestinationFolder);
+        }
+        catch (DirectoryNotFoundException)
+        {
+            Console.WriteLine("Folder must exist to be transferred.");
+        }
         Console.WriteLine("=====\nTo quit, use Ctrl + Z.\nTo transfer another folder, use command: -s [sourceFolder] -d [destinationFolder]\n====");
     }
 
 }
 
-static void CommandFileTransfer(IEventBus eventBus, string sourceFolder, string destinationFolder)
-{
-    eventBus.Publish<TransferEvent>(new TransferEvent(routingKey: Queues.FOLDER_QUEUE, createdAt: DateTime.Now)
-    {
-        SourcePath = sourceFolder,
-        DestinationPath = destinationFolder,
-    });
-    Console.WriteLine($"{sourceFolder} folder succesfully queued to transfer.\n\n");
-}
 
 

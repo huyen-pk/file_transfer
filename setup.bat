@@ -11,5 +11,7 @@ set RabbitMqConfig__ServerUri=amqp://guest:guest@localhost:1978
 echo Starting RabbitMq in container...
 docker-compose -f RdxFileTransfer\docker-compose.yml up -d
 
+SLEEP 20
+
 echo Starting scheduler
 Release\RdxFileTransfer.Scheduler.exe

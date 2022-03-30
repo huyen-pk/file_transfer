@@ -28,7 +28,7 @@ namespace RdxFileTransfer.Scheduler.Workers
             ScanFolder(sourceFolder, destinationFolder, enumerateExtension);
         }
 
-        private void ScanFolder(
+        public void ScanFolder(
             string sourceFolder,
             string destinationFolder,
             Func<string, IEnumerable<string>> enumerateExtensions)

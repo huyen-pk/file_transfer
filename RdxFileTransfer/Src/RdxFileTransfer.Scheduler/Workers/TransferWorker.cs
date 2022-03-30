@@ -11,7 +11,7 @@ namespace RdxFileTransfer.Scheduler.Workers
     /// <summary>
     /// Transfer files of from source folder to destination folder.
     /// </summary>
-    internal class TransferWorker : IWorker
+    public class TransferWorker : IWorker
     {
         private IEventBus _eventBus;
         private readonly ILogger<TransferWorker> _logger;
@@ -40,7 +40,7 @@ namespace RdxFileTransfer.Scheduler.Workers
                     StartTransfer(content.SourcePath, content.DestinationPath, _queue);
             }
         }
-        private void StartTransfer(string sourcePath, string destinationPath, string extension)
+        public void StartTransfer(string sourcePath, string destinationPath, string extension)
         {
             if (!File.Exists(sourcePath))
             {
