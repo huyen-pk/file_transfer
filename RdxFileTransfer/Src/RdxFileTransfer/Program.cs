@@ -59,7 +59,7 @@ static void Run(IServiceProvider provider, string[] args)
         {
             Console.BackgroundColor = ConsoleColor.Red;
             Console.WriteLine("Folder must exist to be transferred.");
-            Console.BackgroundColor = ConsoleColor.Red;
+            Console.BackgroundColor = ConsoleColor.Black;
         }
     }
 
@@ -81,7 +81,9 @@ static void Run(IServiceProvider provider, string[] args)
         }
         catch (DirectoryNotFoundException)
         {
+            Console.BackgroundColor = ConsoleColor.Red;
             Console.WriteLine("Folder must exist to be transferred.");
+            Console.BackgroundColor = ConsoleColor.Black;
         }
         Console.WriteLine("=====\nTo quit, use Ctrl + Z.\nTo transfer another folder, use command: -s [sourceFolder] -d [destinationFolder]\n====");
     }
