@@ -1,5 +1,5 @@
 # File transfer
-Transferring files from one folder to another asynchronously
+Transferring files from one folder to another asynchronously.
 
 ## Assumptions
 - When a file is transferred, a copy of this file is placed under the new folder, keeping the original intact.
@@ -8,9 +8,13 @@ Transferring files from one folder to another asynchronously
 - When transferred files from subfolders, the subfolder structure is not maintained. 
 All files would be copied into the destination folder without taking into account the subfolder structure.
 
+## Dependencies
+- RabbitMq
+- Docker
+
 ## Architecture
 
-![Architecture](system_design.svg)
+<div style='text-align:center'><img src='system_design.svg' style='width:400px'/></div>
 
 ```
 ├───RdxFileTransfer
@@ -26,17 +30,20 @@ All files would be copied into the destination folder without taking into accoun
     └───Workers
 ```
 
-- RdxFileTransfer : receives input from users and queue it for background processing.
+- ```RdxFileTransfer``` : receives input from users and queue it for background processing.
 
-- RdxFileTransfer.EventBus: a common interface used for message transporting.
+- ```RdxFileTransfer.EventBus```: a common interface used for message transporting.
 The current implementation only provides RabbitMq, but it is possible to extend the library to support different types of event bus (rabbitmq, azure...).
 
-- RdxFileTransfer.Scheduler: receives messages from  the task queue (transfer command from users) and schedule workers to process these commands.
+- ```RdxFileTransfer.Scheduler```: receives messages from  the task queue (transfer command from users) and schedule workers to process these commands.
 The scheduler runs in the a separate process and listens to the task queue. When a message arrives:
-    1) Create a worker process to scan the folder.
-    2) The scanner creates a queue for each file extension and queue each file to its respective queue.
-    3) The scheduler then creates a worker process for each file extention (if there is no worker currently handling this file type).
-    4) These transfer workers listen to the file queues and transfer files as they process these events.
+
+<ol style='list-style-position: inside;margin-left:35px'>
+    <li>Create a worker process to scan the folder.</li>
+    <li>The scanner creates a queue for each file extension and queue each file to its respective queue.</li>
+    <li>The scheduler then creates a worker process for each file extention (if there is no worker currently handling this file type).</li>
+    <li>These transfer workers listen to the file queues and transfer files as they process these events.</li>
+</ol>
 
 ## Message queue structure
 <table border="0">
@@ -72,7 +79,7 @@ The scheduler runs in the a separate process and listens to the task queue. When
 - A message is removed from queue once a worker starts reading it. This is only to simplify our task flows, not to avoid race condition. Because we only have on worker per queue so a race condition should not happen.
 
 ## How to run the application
-Run the first script to setup environment, you must leave the console open so the scheduler can process messages.
+Run the first script to setup environment with default values. You must leave the console open afterwards so that the scheduler can process messages.
 
 ```sh
 setup
@@ -84,14 +91,38 @@ transfer [sourceFolder] [destinationFolder]
 ```
 
 - The ```setup``` scripts:
-    1) Build projects in the solution and publish it to Release folder.
-    2) Set environments variables to default values.
-    3) Starts a RabbitMq server in container, listens at port 1978.
-    4) Starts the scheduler.
+<ol style='list-style-position: inside;margin-left:35px'>
+    <li>Build projects in the solution and publish it to <i>Release</i> folder.</li>
+    <li>Set environments variables to default values.</li>
+    <li>Starts a RabbitMq server in container, listens at port 1978.</li>
+    <li>Starts the scheduler.</li>
+</ol>
 
 - The ```transfer``` scripts runs RdxFileTransfer application which then starts listen to user input.
 
-- The default event bus is RabbitMq. You can choose the event bus using -b option when running RdxFileTransfer and RdxFileTransfer.Scheduler or by setting environment variable 'eventbus'.
+- The default event bus is RabbitMq. You can choose the event bus using ```-b``` option when running RdxFileTransfer and RdxFileTransfer.Scheduler or by setting environment variable ```eventbus```.
+<table border="0">
+ <tr>
+    <td><b>Environment variables</b></td>
+    <td><b>Usage</b></td>
+ </tr>
+  <tr>
+    <td>RabbitMqConfig__ExchangeKey</td>
+    <td>RabbitMq exchange.<br>
+    Default to <i>transfer_commands</i>.</td>
+ </tr>
+   <tr>
+    <td>RabbitMqConfig__ServerUri</td>
+    <td>RabbitMq server uri. Default to <br>
+    <i>amqp://guest:guest@localhost:1978</i></td>
+ </tr>
+  </tr>
+   <tr>
+    <td>eventbus</td>
+    <td>Type of event bus.<br>
+    Default to <i>rabbitmq</i>.</td>
+ </tr>
+</table>
 
 <table border="0">
  <tr>
@@ -100,7 +131,7 @@ transfer [sourceFolder] [destinationFolder]
  </tr>
  <tr>
     <td>-b, --bus</td>
-    <td>Event bus, only at start up</td>
+    <td>Event bus. Default to <i>rabbitmq</i>.</td>
  </tr>
 </table>
 
@@ -109,17 +140,13 @@ transfer [sourceFolder] [destinationFolder]
     <td><b>RdxFileTransfer Option</b></td>
     <td><b>Usage</b></td>
  </tr>
- <tr>
-    <td>-b, --bus</td>
-    <td>Event bus, only at start up</td>
- </tr>
   <tr>
     <td>-s, --source</td>
-    <td>Source folder, when promted at run time</td>
+    <td>Source folder, app start and when promted at run time</td>
  </tr>
    <tr>
     <td>-d, --destination</td>
-    <td>Destination folder, when promted at run time</td>
+    <td>Destination folder, app start and when promted at run time</td>
  </tr>
 </table>
 
@@ -128,12 +155,9 @@ transfer [sourceFolder] [destinationFolder]
 
 ## Further topics to explore
 - Implement health monitor and autorecovery.
-- Extend to support other types of event bus (azure bus, ActiveMq...).
-- Explore IOrchestrator to support other task flows.
+- Extend IEventBus to support other types of event bus (azure bus, ActiveMq...).
+- Extend IOrchestrator to support other task flows.
 - Process error and success queues.
 - Integration tests.
 - More unit tests.
 
-## Dependencies
-- RabbitMq
-- Docker
