@@ -17,16 +17,8 @@ using IHost host = Host.CreateDefaultBuilder(args)
         })
         .ConfigureServices((context, services) =>
            {
-               StartupOptions startupOptions = null;
-
-               Parser.Default.ParseArguments<StartupOptions>(args)
-                   .WithParsed((cmdArgs) => startupOptions = cmdArgs);
-               if (startupOptions != null)
-                   startupOptions = new StartupOptions()
-                   {
-                       EventBus = Environment.GetEnvironmentVariable(Env.EventBus) ?? Env.EventBus_Default
-                   };
-               switch (startupOptions?.EventBus)
+               var eventBus = Environment.GetEnvironmentVariable(Env.EventBus) ?? Env.EventBus_Default;
+               switch (eventBus)
                {
                    case Env.EventBus_RabbitMq:
                    default:
@@ -39,13 +31,30 @@ using IHost host = Host.CreateDefaultBuilder(args)
            })
         .Build();
 
-Run(host.Services, args);
+Start(host.Services, args);
 
-static void Run(IServiceProvider provider, string[] args)
+static void Start(IServiceProvider provider, string[] args)
 {
-    Console.WriteLine("=====\nTo quit, use Ctrl + Z.\nTo transfer another folder, use command: -s [sourceFolder] -d [destinationFolder]\n====");
     using var serviceScope = provider.CreateScope();
     var runner = serviceScope.ServiceProvider.GetRequiredService<Runner>();
+    Run(args, runner);
+
+    while (true)
+    {
+        var input = Console.ReadLine();
+        if (input == null)
+            break;
+
+        var arguments = input.Split(' ');
+
+        Run(arguments, runner);
+        Console.WriteLine("=====\nTo quit, use Ctrl + Z.\nTo transfer another folder, use command: -s [sourceFolder] -d [destinationFolder]\n====");
+    }
+
+}
+
+static void Run(string[] args, Runner runner)
+{
     CommandLineOptions options = null;
     Parser.Default.ParseArguments<CommandLineOptions>(args)
                 .WithParsed((cmdArgs) => options = cmdArgs);
@@ -62,33 +71,6 @@ static void Run(IServiceProvider provider, string[] args)
             Console.BackgroundColor = ConsoleColor.Black;
         }
     }
-
-    while (true)
-    {
-        var input = Console.ReadLine();
-        if (input == null)
-            break;
-
-        var arguments = input.Split(' ');
-        Parser.Default.ParseArguments<CommandLineOptions>(arguments)
-                .WithParsed((cmdArgs) => options = cmdArgs);
-        if (options == null)
-            continue;
-
-        try
-        {
-            runner.CommandFileTransfer(options.SourceFolder, options.DestinationFolder);
-        }
-        catch (DirectoryNotFoundException)
-        {
-            Console.BackgroundColor = ConsoleColor.Red;
-            Console.WriteLine("Folder must exist to be transferred.");
-            Console.BackgroundColor = ConsoleColor.Black;
-        }
-        Console.WriteLine("=====\nTo quit, use Ctrl + Z.\nTo transfer another folder, use command: -s [sourceFolder] -d [destinationFolder]\n====");
-    }
-
 }
-
 
 
