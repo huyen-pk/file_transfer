@@ -35,14 +35,14 @@ All files would be copied into the destination folder without taking into accoun
 - ```RdxFileTransfer``` : receives input from users and queue it for background processing.
 
 - ```RdxFileTransfer.EventBus```: a common interface used for message transporting.
-The current implementation only provides RabbitMq, but it is possible to extend the library to support different types of event bus (rabbitmq, azure...).
+The current implementation only provides RabbitMq, but it is possible to extend the library to support different types of event bus (activemq, azure...).
 
-- ```RdxFileTransfer.Scheduler```: receives messages from  the task queue (transfer command from users) and schedule workers to process these commands.
-The scheduler runs in the a separate process and listens to the task queue. When a message arrives:
+- ```RdxFileTransfer.Scheduler```: receives messages from  the task queue (transfer commands from users) and schedules workers to process these commands.
+The scheduler runs in a separate process and listens to the task queue. When a message arrives:
 
 <ol style='list-style-position: inside;margin-left:35px'>
-    <li>Create a worker process to scan the folder.</li>
-    <li>The scanner creates a queue for each file extension and queue each file to its respective queue.</li>
+    <li>Creates a worker process to scan the folder.</li>
+    <li>The scanner creates a queue for each file extension and queues each file to its respective queue.</li>
     <li>The scheduler then creates a worker process for each file extention (if there is no worker currently handling this file type).</li>
     <li>These transfer workers listen to the file queues and transfer files as they process these events.</li>
 </ol>
@@ -67,18 +67,18 @@ The scheduler runs in the a separate process and listens to the task queue. When
     </tr>
     <tr>
         <td>no_ext</td>
-        <td>Files without extension waiting to be transferred</td>
+        <td>Files without extension waiting to be transferred.</td>
     </tr>
     <tr>
         <td>docx, pdf, txt...</td>
-        <td>Files with a specifique extension waiting to be transferred</td>
+        <td>Files with a specific extension waiting to be transferred.</td>
     </tr>
 </table>
 
 **Message queue behavior**
 - Queue is durable so events are not lost in case of abrupt shutdown.
 
-- A message is removed from queue once a worker starts reading it. This is only to simplify our task flows, not to avoid race condition. Because we only have on worker per queue so a race condition should not happen.
+- A message is removed from queue once a worker starts reading it. This is only to simplify our task flows, not to avoid race condition. Because we only have one worker per queue so a race condition should not happen.
 
 ## How to run the application
 Run the first script to setup environment with default values. You must leave the console open afterwards so that the scheduler can process messages.
@@ -92,15 +92,15 @@ In another console windows, run transfer script to start application:
 transfer [sourceFolder] [destinationFolder]
 ```
 
-- The ```setup``` scripts:
+- The ```setup``` script:
 <ol style='list-style-position: inside;margin-left:35px'>
-    <li>Build projects in the solution and publish it to <i>Release</i> folder.</li>
-    <li>Set environments variables to default values.</li>
+    <li>Builds projects in the solution and publishes it to <i>Release</i> folder.</li>
+    <li>Sets environment variables to default values.</li>
     <li>Starts a RabbitMq server in container, listens at port 1978.</li>
     <li>Starts the scheduler.</li>
 </ol>
 
-- The ```transfer``` scripts runs RdxFileTransfer application which then starts listen to user input.
+- The ```transfer``` script runs RdxFileTransfer application which then starts listening to user input.
 
 - The default event bus is RabbitMq. You can choose the event bus using ```-b``` option when running RdxFileTransfer and RdxFileTransfer.Scheduler or by setting environment variable ```eventbus```.
 <table border="0">
