@@ -18,7 +18,7 @@ jobs:
       with:
         dotnet-version: 5.0.x
     - name: Restore dependencies
-      run: dotnet restore
+      run: dotnet restore RdxFileTransfer/RdxFileTransfer.sln
     - name: Build
       run: dotnet build RdxFileTransfer/RdxFileTransfer.sln --no-restore
     - name: Test
