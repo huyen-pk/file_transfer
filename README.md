@@ -94,7 +94,7 @@ transfer [sourceFolder] [destinationFolder]
 
 - The ```setup``` script:
 <ol style='list-style-position: inside;margin-left:35px'>
-    <li>Builds projects in the solution and publishes it to ```Release``` folder.</li>
+    <li>Builds projects in the solution and publishes it to <i>Release</i> folder.</li>
     <li>Sets environment variables to default values.</li>
     <li>Starts a RabbitMq server in container, listens at port 1978.</li>
     <li>Starts the scheduler.</li>
