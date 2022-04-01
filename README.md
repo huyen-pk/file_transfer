@@ -1,3 +1,5 @@
+[![.NET](https://github.com/huyen-pk/file_transfer/actions/workflows/dotnet.yml/badge.svg?branch=main)](https://github.com/huyen-pk/file_transfer/actions/workflows/dotnet.yml)
+
 # File transfer
 Transferring files from one folder to another asynchronously.
 
